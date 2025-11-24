@@ -19,7 +19,7 @@ A powerful web application for detecting and redacting Personally Identifiable I
 ## 🏗️ Project Structure
 
 ```
-PYTHON_STACK/
+PII-REDACTION-TOOL/
 ├── public/
 │   ├── app.js          # Frontend JavaScript logic
 │   ├── index.html      # Main HTML structure
@@ -42,7 +42,6 @@ PYTHON_STACK/
 1. **Clone the repository**
    ```bash
    git clone https://github.com/subhammahankud/pii-redaction-tool.git
-   cd PYTHON_STACK
    ```
 
 2. **Install Python dependencies**
