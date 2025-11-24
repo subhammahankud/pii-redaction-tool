@@ -41,7 +41,7 @@ PYTHON_STACK/
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/subhammahankud/pii-redaction-tool.git
    cd PYTHON_STACK
    ```
 
