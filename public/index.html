@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>PII Redaction Tool</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="header">
+    <div class="header-controls">
+      <button class="icon-btn" id="themeToggle" title="Toggle Dark Mode">🌙</button>
+      <button class="icon-btn" id="resetBtn" title="Reset All">🔄</button>
+    </div>
+    <h1>🔒 PII Redaction Tool</h1>
+    <p>Securely detect and redact sensitive information from your documents</p>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <div class="section-title">📄 Input Source</div>
+      
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">📁</div>
+        <div class="upload-text">Click to upload PDF or drag and drop</div>
+        <div class="upload-text" style="font-size: 0.875rem;">Supports PDF files</div>
+        <div class="file-name" id="fileName"></div>
+        <input id="pdfInput" type="file" accept="application/pdf" />
+      </div>
+
+      <div class="section-title">✍️ Or Paste Text</div>
+      <textarea id="textInput" placeholder="Paste your text here for PII detection..."></textarea>
+    </div>
+
+    <div class="card">
+      <div class="section-title">⚙️ Redaction Settings</div>
+      
+      <div class="toggles">
+        <div class="toggle-item">
+          <input type="checkbox" id="redactEmails" checked />
+          <label for="redactEmails">📧 Emails</label>
+        </div>
+        <div class="toggle-item">
+          <input type="checkbox" id="redactPhones" checked />
+          <label for="redactPhones">📱 Phone Numbers</label>
+        </div>
+        <div class="toggle-item">
+          <input type="checkbox" id="redactNames" checked />
+          <label for="redactNames">👤 Names</label>
+        </div>
+        <div class="toggle-item">
+          <input type="checkbox" id="redactAddresses" checked />
+          <label for="redactAddresses">🏠 Addresses</label>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button id="redactBtn">🚀 Redact PII</button>
+        <button id="downloadTxtBtn" disabled>💾 Download TXT</button>
+        <button id="downloadPdfBtn" disabled>📄 Download PDF</button>
+      </div>
+    </div>
+
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <div>Processing...</div>
+    </div>
+
+    <div class="card">
+      <div class="outputs">
+        <div class="output-box">
+          <h3>Original Text</h3>
+          <textarea id="originalOutput" readonly></textarea>
+        </div>
+        <div class="output-box">
+          <h3>Redacted Text</h3>
+          <textarea id="redactedOutput" readonly></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="log-box">
+        <h3>📋 Redaction Log</h3>
+        <textarea id="logOutput" readonly placeholder="Redaction details will appear here..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
