@@ -62,9 +62,86 @@ PII-REDACTION-TOOL/
 5. **Access the application**
    - Open your browser and navigate to `http://localhost:5000`
 
+## ☸️ Kubernetes Deployment
+
+The application is deployed on Kubernetes and accessible at:
+
+**Live Demo**: [http://127.0.0.1:63191](http://127.0.0.1:63191)
+
+### Deploy to Kubernetes
+
+1. **Create deployment.yaml**
+   ```yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: pii-redaction-deployment
+   spec:
+     replicas: 3
+     selector:
+       matchLabels:
+         app: pii-redaction
+     template:
+       metadata:
+         labels:
+           app: pii-redaction
+       spec:
+         containers:
+         - name: pii-redaction
+           image: subhammahankud/pii-redaction-tool:01
+           ports:
+           - containerPort: 5000
+   ---
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: pii-redaction-service
+   spec:
+     type: LoadBalancer
+     selector:
+       app: pii-redaction
+     ports:
+     - protocol: TCP
+       port: 80
+       targetPort: 5000
+   ```
+
+2. **Apply the configuration**
+   ```bash
+   kubectl apply -f deployment.yaml
+   ```
+
+3. **Check deployment status**
+   ```bash
+   kubectl get pods
+   kubectl get services
+   ```
+
+4. **Access the application**
+   - Get the service URL: `kubectl get service pii-redaction-service`
+   - Access via the provided external IP or port-forward:
+     ```bash
+     kubectl port-forward service/pii-redaction-service 8080:80
+     ```
+
 ## 🐳 Docker Deployment
 
-### Build and Run
+### Option 1: Pull from Docker Hub (Recommended)
+
+1. **Pull the pre-built image**
+   ```bash
+   docker pull subhammahankud/pii-redaction-tool:01
+   ```
+
+2. **Run the container**
+   ```bash
+   docker run -d -p 5000:5000 --name pii-app subhammahankud/pii-redaction-tool:01
+   ```
+
+3. **Access the application**
+   - Navigate to `http://localhost:5000`
+
+### Option 2: Build from Source
 
 1. **Build the Docker image**
    ```bash
@@ -92,7 +169,7 @@ docker stop pii-app
 docker rm pii-app
 
 # Remove image
-docker rmi pii-redaction-tool
+docker rmi subhammahankud/pii-redaction-tool:01
 ```
 
 ## 🚀 Usage
@@ -188,6 +265,19 @@ The application supports light and dark modes:
 - Click the 🌙/☀️ button in the header to toggle themes
 - Theme preference is maintained during session
 
+## 🐛 Troubleshooting
+
+### spaCy Model Not Found
+```bash
+python -m spacy download en_core_web_sm
+```
+
+### Port Already in Use
+```bash
+# Change port in docker run command
+docker run -p 5000:5000 pii-redaction-tool
+```
+
 ### Container Not Accessible
 - Use `http://localhost:5000`
 - Check if container is running: `docker ps`
@@ -222,5 +312,3 @@ Download redacted text as PDF
 - Files are processed in memory
 - No external API calls for PII detection
 - Suitable for sensitive document handling
-
-**Built with using Flask and spaCy**
